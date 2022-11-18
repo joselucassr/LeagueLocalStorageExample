@@ -1,0 +1,131 @@
+@import url('//db.onlinewebfonts.com/c/12420e8c141ca7c3dff41de2d59df13e?family=BeaufortforLOL-Bold');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+html {
+  background: linear-gradient(45deg, #091428, #0a1428);
+}
+
+header {
+  border-bottom: 2px solid #463714;
+  padding: 0.5rem 3.5rem 0;
+}
+
+header > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  color: #f0e6d2;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+header > div > * {
+  padding: 1rem;
+}
+
+header > div > *:hover {
+  background: linear-gradient(315deg, #785a28 -350%, #091428);
+  box-shadow: 0 2px 0 #c89b3c;
+}
+
+header > div > h1 {
+  font-family: 'BeaufortforLOL-Bold';
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  font-family: inherit;
+}
+
+#container {
+  display: flex;
+  max-width: 1600px;
+  margin: 4rem auto;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+
+#picked-champions {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  width: 8rem;
+  right: 10%;
+  gap: 1rem;
+}
+
+#champions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  row-gap: 2rem;
+  column-gap: 2.5rem;
+  max-width: 80%;
+}
+
+#champions-grid > div {
+  text-align: center;
+  position: relative;
+}
+
+#champions-grid > div > span {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 4rem;
+  color: #f0e6d2;
+  text-shadow: 2px 2px #785a28;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+#champions-grid > div > img:hover + span {
+  visibility: visible;
+}
+
+#champions-grid > div > img {
+  max-height: 40vh;
+}
+
+#champions-grid > div > img:hover {
+  scale: 1.03;
+  outline: 2px solid #c89b3c;
+  mix-blend-mode: exclusion;
+  cursor: pointer;
+}
+
+#champions-grid > div > h2 {
+  font-family: 'BeaufortforLOL-Bold';
+  color: #f0e6d2;
+}
+
+#champions-grid > div > p {
+  font-family: 'BeaufortforLOL-Bold';
+  color: #a09b8c;
+}
+
+.lane-container {
+  background-color: #1e2328;
+  height: 8rem;
+  outline: 2px solid #785a28;
+  padding: 0.5rem;
+}
+
+.lane-container > img {
+  width: 100%;
+}
+
+.selected-lane,
+.selected-champion,
+#champions-grid > div > img:hover.selected-champion {
+  outline: 4px solid #f0e6d2;
+  mix-blend-mode: exclusion;
+}
