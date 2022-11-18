@@ -2,7 +2,7 @@ const championsGrid = document.getElementById('champions-grid');
 const defaultRoleIcons = Array.from(
   document.querySelectorAll('.lane-container > img'),
 ).map((img) => img.src);
-const laneContainers = document.querySelectorAll('.lane-container');
+const pickedChampionsAside = document.getElementById('picked-champions');
 
 const clickState = {
   id: null,
@@ -12,6 +12,10 @@ const clickState = {
 const lastClickedNodes = {
   champion: null,
   lane: null,
+};
+
+const saveToLocalStorage = (innerHTML) => {
+  localStorage.setItem('selected-champions-dirty', innerHTML);
 };
 
 const clearSelections = () => {
@@ -49,14 +53,18 @@ const handdleLaneClick = (laneIndex, laneContainer) => {
 
   laneContainer.children[0].src = `http://ddragon.leagueoflegends.com/cdn/12.22.1/img/champion/${clickState.id}.png`;
   clearSelections();
+  saveToLocalStorage(pickedChampionsAside.innerHTML);
 };
 
 const removeChampionFromLane = (laneIndex, laneContainer) => {
   laneContainer.children[0].src = defaultRoleIcons[laneIndex];
   clearSelections();
+  saveToLocalStorage(pickedChampionsAside.innerHTML);
 };
 
 const setupLanesEventListeners = () => {
+  const laneContainers = document.querySelectorAll('.lane-container');
+
   forEachNode(laneContainers, (laneContainer, i) => {
     laneContainer.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -91,6 +99,7 @@ const handdleChampClick = (champIndex, championContainer) => {
 
   lastClickedNodes.lane.children[0].src = `http://ddragon.leagueoflegends.com/cdn/12.22.1/img/champion/${champIndex}.png`;
   clearSelections();
+  saveToLocalStorage(pickedChampionsAside.innerHTML);
 };
 
 const fetchChampions = async () => {
@@ -133,6 +142,16 @@ const populateGrid = async () => {
   championsArr.forEach(buildAndAppendChampionEl);
 };
 
+const loadSavedChampions = () => {
+  const savedChampionsInnerHTML = localStorage.getItem(
+    'selected-champions-dirty',
+  );
+  if (!savedChampionsInnerHTML) return;
+
+  pickedChampionsAside.innerHTML = savedChampionsInnerHTML;
+};
+
+loadSavedChampions();
 populateGrid();
 setupLanesEventListeners();
 
