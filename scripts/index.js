@@ -14,7 +14,7 @@ const lastClickedNodes = {
   lane: null,
 };
 
-const selectedChampions = Array(5)
+let selectedChampions = Array(5)
   .fill()
   .map(() => ({ id: null }));
 
@@ -150,6 +150,22 @@ const populateGrid = async () => {
   championsArr.forEach(buildAndAppendChampionEl);
 };
 
+const loadSavedChampions = async () => {
+  const savedChampionsJson = localStorage.getItem('selected-champions-neat');
+  if (!savedChampionsJson) return;
+
+  const savedChampions = JSON.parse(savedChampionsJson);
+  selectedChampions = [...savedChampions];
+
+  forEachNode(laneContainers, (laneContainer, i) => {
+    const champIndex = savedChampions[i].id;
+    if (!champIndex) return;
+
+    laneContainer.children[0].src = `http://ddragon.leagueoflegends.com/cdn/12.22.1/img/champion/${champIndex}.png`;
+  });
+};
+
+loadSavedChampions();
 populateGrid();
 setupLanesEventListeners();
 
