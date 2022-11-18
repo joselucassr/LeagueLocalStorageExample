@@ -14,6 +14,17 @@ const lastClickedNodes = {
   lane: null,
 };
 
+const selectedChampions = Array(5)
+  .fill()
+  .map(() => ({ id: null }));
+
+const saveToLocalStorage = () => {
+  localStorage.setItem(
+    'selected-champions-neat',
+    JSON.stringify(selectedChampions),
+  );
+};
+
 const clearSelections = () => {
   lastClickedNodes.champion?.children[0].classList.remove('selected-champion');
   lastClickedNodes.lane?.classList.remove('selected-lane');
@@ -47,13 +58,17 @@ const handdleLaneClick = (laneIndex, laneContainer) => {
     return;
   }
 
+  selectedChampions[laneIndex].id = clickState.id;
   laneContainer.children[0].src = `http://ddragon.leagueoflegends.com/cdn/12.22.1/img/champion/${clickState.id}.png`;
   clearSelections();
+  saveToLocalStorage();
 };
 
 const removeChampionFromLane = (laneIndex, laneContainer) => {
+  selectedChampions[laneIndex].id = null;
   laneContainer.children[0].src = defaultRoleIcons[laneIndex];
   clearSelections();
+  saveToLocalStorage();
 };
 
 const setupLanesEventListeners = () => {
@@ -89,8 +104,10 @@ const handdleChampClick = (champIndex, championContainer) => {
     return;
   }
 
+  selectedChampions[clickState.id].id = champIndex;
   lastClickedNodes.lane.children[0].src = `http://ddragon.leagueoflegends.com/cdn/12.22.1/img/champion/${champIndex}.png`;
   clearSelections();
+  saveToLocalStorage();
 };
 
 const fetchChampions = async () => {
