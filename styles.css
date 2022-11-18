@@ -117,6 +117,7 @@ a {
   height: 8rem;
   outline: 2px solid #785a28;
   padding: 0.5rem;
+  cursor: pointer;
 }
 
 .lane-container > img {
